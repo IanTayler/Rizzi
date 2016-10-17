@@ -40,7 +40,25 @@ func (l *Lexer) getIntegerStr() string {
 		}
 	}
 	
+	if buffer.String() == "" {
+		log.Println("Error: there wasn't an integer for getIntegerStr()")
+	}
+	
 	return buffer.String()
+}
+
+// Lexer method that gets a parenthesis.
+func (l *Lexer) getParen() string {
+	if l.getCurrChar() == '(' {
+		l.pos += 1
+		return "("
+	} else if l.getCurrChar() == ')' {
+		l.pos += 1
+		return ")"
+	}
+	
+	log.Println("Error: there wasn't a parenthesis for getParen()")
+	return ""
 }
 
 // Lexer method that gets an operator starting in the current char.
@@ -97,6 +115,15 @@ func (l *Lexer) getNextToken() Token {
 				mToken = Token{ID, opr}
 			}
 			
+			return mToken
+		
+		} else if mijn.IsPar(currChar) {
+			var mToken Token
+			if currChar == '(' {
+				mToken = Token{LPAR, l.getParen()}
+			} else {
+				mToken = Token{RPAR, l.getParen()}
+			}
 			return mToken
 		
 		} else {

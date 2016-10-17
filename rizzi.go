@@ -25,6 +25,8 @@ const (
 	INTEGER Cat	= iota
 	OP
 	ID
+	LPAR
+	RPAR
 	EOF					// End of file
 	EOL					// End of line
 )
@@ -43,8 +45,8 @@ func main() {
 	for scanner.Scan() {
 		lexer 		:= Lexer{pos: 0}
 		lexer.text 	= scanner.Text() + "\n"
-		interpreter	:= Interpreter{lexer: lexer}
-		result := interpreter.expr()
+		parser	:= newParser(lexer)
+		result := parser.parse()
 		fmt.Println(result)
 		fmt.Printf("calc> ")
 	}

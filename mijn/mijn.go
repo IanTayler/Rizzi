@@ -35,6 +35,14 @@ func IsBlank(b byte) bool {
 	}
 }
 
+func IsPar(b byte) bool {
+	switch b {
+		case '(', ')': 	return true
+		default:		return false
+	}
+	
+}
+
 func IsOp(b byte) bool {
 	switch b {
 		case '+', '-', '*', '/':
