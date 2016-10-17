@@ -27,7 +27,7 @@ func Exp (x, y int) int {
 
 func IsBlank(b byte) bool {
 	switch b {
-		case ' ', '\n', '\t':
+		case ' ', '\t':
 			return true
 			
 		default:
@@ -37,9 +37,43 @@ func IsBlank(b byte) bool {
 
 func IsOp(b byte) bool {
 	switch b {
-		case '+', '-', '*', '/', 'n', 'r', 'e':
+		case '+', '-', '*', '/':
 			return true
 			
+		default:
+			return false
+	}
+}
+
+func IsOpStr(s string) bool {
+	switch s {
+		case "+", "-", "*", "/", "rem", "exp", "neg", "succ": 
+			return true
+		default: 
+			return false
+	}
+}
+
+func IsSubfactorOp(s string) bool {
+	switch s {
+		case "exp": return true
+		default:	return false
+	}
+}
+
+func IsFactorOp(s string) bool {
+	switch s {
+		case "*", "/", "rem", "exp": 
+			return true
+		default:
+			return false
+	}
+}
+
+func IsTermOp(s string) bool {
+	switch s {
+		case "+", "-":
+			return true
 		default:
 			return false
 	}
@@ -61,7 +95,8 @@ func OpToFunc(s string) func(int, int) int {
 
 func UnOpToFunc(s string) func(int) int {
 	switch s {
-		case "neg":	return func(x int) int { return -x }
-		default:	return func(x int) int { return 0  }
+		case "neg":		return func(x int) int { return -x }
+		case "succ":	return func(x int) int { return x+1}
+		default:		return func(x int) int { return 0  }
 	}
 }
