@@ -36,16 +36,22 @@ There's also syntactic bugs in the way we deal with parentheses.
 - Add a 'print' order.
 - Add multiple variables to programs.
 - Add a type system with:
+
   Short-term:
-	i.   Integers and natural numbers (i.e. unsigned integers) as distinct types.
-	ii.  Type inference.
-	iii. Pairs with elements of arbitrary type.
+  
+	-i.   Integers and natural numbers (i.e. unsigned integers) as distinct types.
+	-ii.  Type inference.
+	-iii. Pairs with elements of arbitrary type.
+	
   Mid- and long-term:
-	iv.  Lists (perhaps we can use pairs and pointers to pairs internally)
-	v.   Bytes
-	vi.  Structs
+  
+	-iv.  Lists (perhaps we can use pairs and pointers to pairs internally)
+	-v.   Bytes
+	-vi.  Structs
+	
   Perhaps:
-	vi.  UTF-8 characters and UTF-8 strings.
+  
+	-vi.  UTF-8 characters and UTF-8 strings.
 - Add function declarations and functions as first-class types.
 - Lexical scope.
 - The Go API.
