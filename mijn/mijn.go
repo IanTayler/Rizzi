@@ -27,7 +27,7 @@ func Exp (x, y int) int {
 
 func IsBlank(b byte) bool {
 	switch b {
-		case ' ', '\t':
+		case ' ', '\t', '\n':
 			return true
 			
 		default:
@@ -45,7 +45,7 @@ func IsPar(b byte) bool {
 
 func IsOp(b byte) bool {
 	switch b {
-		case '+', '-', '*', '/':
+		case '+', '-', '*', '/', '=', ',', '[', ']':
 			return true
 			
 		default:
@@ -55,9 +55,18 @@ func IsOp(b byte) bool {
 
 func IsOpStr(s string) bool {
 	switch s {
-		case "+", "-", "*", "/", "rem", "exp", "neg", "succ": 
+		case "+", "-", "*", "/", "rem", "exp", "neg", "succ", "plus", "pred": 
 			return true
 		default: 
+			return false
+	}
+}
+
+func IsSpecStr(s string) bool {
+	switch s {
+		case "main", "m", "end", "e", "print", "if", "then", "=", "for", "do", "[", "]":
+			return true
+		default:
 			return false
 	}
 }
@@ -105,6 +114,8 @@ func UnOpToFunc(s string) func(int) int {
 	switch s {
 		case "neg":		return func(x int) int { return -x }
 		case "succ":	return func(x int) int { return x+1}
+		case "plus":	return func(x int) int { return +x }
+		case "pred":	return func(x int) int { return x-1}
 		default:		return func(x int) int { return 0  }
 	}
 }

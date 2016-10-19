@@ -6,6 +6,7 @@ import (
 	"unicode"
 	"strconv"
 	"log"
+	"fmt"
 )
 
 type Lexer struct {
@@ -13,9 +14,26 @@ type Lexer struct {
 	pos 			int
 }
 
+func newLexer(txt string) *Lexer {
+	result := Lexer{}
+	result.text = txt
+	result.pos = 0
+	return &result
+}
+
 // Lexer method that gets the current char.
 func (l *Lexer) getCurrChar() byte {
 	return l.text[l.pos]
+}
+
+// Lexer method that peeks the next char.
+func (l *Lexer) peek() byte {
+	peekPos := l.pos + 1
+	if peekPos > len(l.text) - 1 {
+		return '\x00'
+	} else {
+		return l.text[peekPos]
+	}
 }
 
 // Lexer method that skips all following whitespace
@@ -65,7 +83,7 @@ func (l *Lexer) getParen() string {
 func (l *Lexer) getOperator() string {
 	var buffer bytes.Buffer
 	
-	for unicode.IsLetter(rune(l.getCurrChar())) {
+	for unicode.IsLetter(rune(l.getCurrChar())) || unicode.IsNumber(rune(l.getCurrChar())) {
 		
 		buffer.WriteString(string(l.getCurrChar()))
 		
@@ -105,12 +123,28 @@ func (l *Lexer) getNextToken() Token {
 			return mToken
 		
 		} else if unicode.IsLetter(rune(currChar)) || mijn.IsOp(currChar) {
+			if VERBOSE { fmt.Println("We recognise this character: ", string(currChar), " as one that can be an operator, an ID, or something of the sort")}
 			opr := l.getOperator()
 			
 			var mToken Token
 			
 			if mijn.IsOpStr(opr) {
 				mToken = Token{OP, opr}
+			} else if mijn.IsSpecStr(opr) {
+				switch opr {
+					case "main", "m":	mToken = Token{MAIN, "main"}
+					case "end", "e":	mToken = Token{END, "end"}
+					case "print":		mToken = Token{PRINT, "print"}
+					case "if":			mToken = Token{IF, "if"}
+					case "then":		mToken = Token{THEN, "then"}
+					case "=":			mToken = Token{ASSIGN, "="}
+					case "for":			mToken = Token{FOR, "for"}
+					case "do":			mToken = Token{DO, "do"}
+					case ",":			mToken = Token{COMMA, ","}
+					case "[":			mToken = Token{LBRACKET, "["}
+					case "]":			mToken = Token{RBRACKET, "]"}
+					default:			log.Println("Mismatch between IsSpecStr and the list of special strings.")
+				}
 			} else {
 				mToken = Token{ID, opr}
 			}
