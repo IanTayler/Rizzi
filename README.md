@@ -2,27 +2,27 @@ This is an interpreter for (right now, a fragment of) the Rizzi programming lang
 
 Syntactically, this is how the fragment works. Terminals are between '':
 
-PROGRAM		-> MAIN '[' ID ']' STATEMENTLIST END
+	PROGRAM			-> MAIN '[' ID ']' STATEMENTLIST END
 
-STATEMENTLIST   -> STATEMENT STATEMENTLIST
+	STATEMENTLIST   -> STATEMENT STATEMENTLIST
 
-STATEMENT	-> EXPR | ORDER | ASSIGNMENT
+	STATEMENT		-> EXPR | ORDER | ASSIGNMENT
 
-ASSIGNMENT	-> ID '=' EXPR
+	ASSIGNMENT		-> ID '=' EXPR
 
-ORDER		-> 'if' EXPR 'then' STATEMENTLIST 'end' |
+	ORDER			-> 'if' EXPR 'then' STATEMENTLIST 'end' |
 
-		   'for' EXPR 'do' STATEMENTLIST 'end'
+					'for' EXPR 'do' STATEMENTLIST 'end'
 		   
-EXPR		-> mathemathical expressions with +, *, -, integer /,
+	EXPR			-> mathemathical expressions with +, *, -, integer /,
 
-		   rem, neg, succ, pred, exp, numbers and variables.
+					rem, neg, succ, pred, exp, numbers and variables.
 		   
-ID			-> variable names
+	ID				-> variable names
 
-MAIN		-> 'main' | 'm'
+	MAIN			-> 'main' | 'm'
 
-END			-> 'end' | 'e'
+	END				-> 'end' | 'e'
 
 Statements should be on separate lines. The parser works fine when that's the case but I'm not entirely sure why (which is pretty bad).
 
