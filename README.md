@@ -4,7 +4,7 @@ Syntactically, this is how the fragment works. Terminals are between '':
 
 	PROGRAM			-> MAIN '[' ID ']' STATEMENTLIST END
 
-	STATEMENTLIST   -> STATEMENT STATEMENTLIST
+	STATEMENTLIST   	-> STATEMENT STATEMENTLIST
 
 	STATEMENT		-> EXPR | ORDER | ASSIGNMENT
 
@@ -18,11 +18,11 @@ Syntactically, this is how the fragment works. Terminals are between '':
 
 					rem, neg, succ, pred, exp, numbers and variables.
 		   
-	ID				-> variable names
+	ID			-> variable names
 
 	MAIN			-> 'main' | 'm'
 
-	END				-> 'end' | 'e'
+	END			-> 'end' | 'e'
 
 Statements should be on separate lines. The parser works fine when that's the case but I'm not entirely sure why (which is pretty bad).
 
